@@ -5,6 +5,12 @@ const Sandbox = require("./model/sandbox");
 const Feeding = require("./model/category");
 const User = require("./model/user");
 
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
 const sandboxController = require("./controller/sandboxController");
 const userController = require("./controller/userController");
 const categoryController = require("./controller/categoryController");
@@ -41,6 +47,13 @@ app.get("/sandbox/:sandboxId/category/:categoryId/thread", threadController.get)
 app.delete("/sandbox/:sandboxId/category/:categoryId/thread/:threadId", threadController.delete);
 
 //Comment
+//app.post("/sandbox/:sandboxId/category/:categoryId/thread/:threadId/comment", commentController.post);
+//app.get("/sandbox/:sandboxId/category/:categoryId/thread/:threadId/comment", commentController.post);
+//app.delete("/sandbox/:sandboxId/category/:categoryId/thread/:threadId/comment/:commentId", commentController.post);
+
+//Likes
+//app.post()
+
 
 
 //Like
