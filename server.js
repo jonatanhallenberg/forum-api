@@ -22,6 +22,7 @@ const sandboxController = require("./controller/sandboxController");
 const userController = require("./controller/userController");
 const categoryController = require("./controller/categoryController");
 const threadController = require("./controller/threadController");
+const commentController = require("./controller/commentController");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -46,25 +47,20 @@ app.post("/sandbox/:sandboxName/user", sandboxMiddleware, userController.post);
 //Category
 app.post("/sandbox/:sandboxName/category", sandboxMiddleware, categoryController.post);
 app.get("/sandbox/:sandboxName/category", sandboxMiddleware, categoryController.get);
-app.delete("/sandbox/:sandboxName/category/:categoryId", sandboxMiddleware, categoryController.delete)
 
 //Thread
-app.post("/sandbox/:sandboxId/category/:categoryId/thread", threadController.post);
-app.get("/sandbox/:sandboxId/category/:categoryId/thread", threadController.get);
-app.delete("/sandbox/:sandboxId/category/:categoryId/thread/:threadId", threadController.delete);
+app.post("/category/:categoryId/thread", threadController.post);
+app.get("/category/:categoryId/thread", threadController.get);
+
+//Likes on threads
+//app.post("/thread/:threadId/like", likeController.postForThread);
 
 //Comment
-//app.post("/sandbox/:sandboxId/category/:categoryId/thread/:threadId/comment", commentController.post);
-//app.get("/sandbox/:sandboxId/category/:categoryId/thread/:threadId/comment", commentController.post);
-//app.delete("/sandbox/:sandboxId/category/:categoryId/thread/:threadId/comment/:commentId", commentController.post);
+app.post("/thread/:threadId/comment", commentController.post);
+app.get("/thread/:threadId/comment", commentController.get);
 
-//Likes
-//app.post()
-
-
-
-//Like
-
+//Likes on threads
+//app.post("/comment/:commentId/like", likeControler.postForComment);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

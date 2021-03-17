@@ -1,17 +1,17 @@
-const Category = require("../model/category");
-const Thread = require("../model/thread");
+const Thread = require("../model/category");
+const Comment = require("../model/comment");
 
 module.exports = {
   get: async (req, res) => {
     try {
-      const category = await Category.findById(req.params.categoryId).populate(
-        "threads"
+      const thread = await Thread.findById(req.params.threadId).populate(
+        "comments"
       );
 
-      if (!category) {
-        res.status(404).send("Category not found");
+      if (!thread) {
+        res.status(404).send("Thread not found");
       } else {
-        res.json(category.threads);
+        res.json(thread.comments);
       }
     } catch (e) {
       console.log(e);
@@ -19,7 +19,7 @@ module.exports = {
     }
   },
   post: async (req, res) => {
-    const category = await Category.findById(req.params.categoryId);
+    const thread = await Thread.findById(req.params.categoryId);
 
     if (!category) {
       res.status(404).send("Category not found");
@@ -33,18 +33,18 @@ module.exports = {
     }
   },
   delete: async (req, res) => {
-    const category = await Category.findById(req.params.categoryId);
-    if (!category) {
-      res.status(404).send("Category not found");
+    const thread = await Thread.findById(req.params.threadId);
+    if (!thread) {
+      res.status(404).send("Thread not found");
     } else {
-      const deleteResult = await Thread.findByIdAndDelete(req.params.threadId);
+      const deleteResult = await Comment.findByIdAndDelete(req.params.commentId);
 
       if (deleteResult) {
-        category.threads = category.threads.filter(
-          (threadId) => threadId != req.params.threadId
+        thread.comments = thread.comments.filter(
+          (commentId) => commentId != req.params.commentId
         );
         try {
-          await category.save();
+          await thread.save();
         } catch (e) {
           res.send(500).end();
           console.log(e);

@@ -66,10 +66,18 @@ paths:
                   ownerEmail: "jonatan.hallenberg@sprinto.se"
                   createdAt: "2021-03-17T14:35:06.542Z"
         '409':
-          description: Sandbox name is already taken. Choose another name
+          description: Sandbox name is already taken
   /sandbox/{sandboxName}/user:
     post:
       summary: Creates a new user with username and password
+      parameters:
+        - in: path
+          name: sandboxName
+          schema:
+            type: string
+          required: true
+          description: Name of the sandbox where to create category
+          example: JontesAPI
       requestBody:
         required: true
         content:
@@ -99,5 +107,233 @@ paths:
                     type: string
                 example:
                   _id: "6052139a7b1b742fc11a798b"
+        '404':
+          description: Sandbox does not exists
+        '409':
+          description: Username does already exist
+  /sandbox/{sandboxName}/category:
+    post:
+      summary: Creates a new category
+      parameters:
+        - in: path
+          name: sandboxName
+          schema:
+            type: string
+          required: true
+          description: Name of the sandbox where to create category
+          example: JontesAPI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+              example:
+                name: 'Husdjur'   
+      responses:
+        '201':
+          description: Category created successfully
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  _id:
+                    type: string
+                example:
+                  _id: "6052139a7b1b742fc11a798b"
+        '404':
+          description: Sandbox does not exists
+    get:
+      summary: Get all categoris in a sandbox
+      parameters:
+        - in: path
+          name: sandboxName
+          schema:
+            type: string
+          required: true
+          description: Name of the sandbox where to create category
+          example: JontesAPI
+      responses:
+        '200':
+          description: Successfully loaded content
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name: 
+                      type: string
+                    _id:
+                      type: string
+                    threads:
+                      type: array
+                      items:
+                        type: string
+        '404':
+          description: Sandbox does not exists
+  /category/{categoryId}/thread:
+    post:
+      summary: Creates a new thread
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: Id for the associated category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+              required:
+                - title
+                - content
+              example:
+                title: 'Min katt'
+                content: 'Min katt är bäst'
+      responses:
+        '201':
+          description: Thread created successfully
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  _id:
+                    type: string
+                example:
+                  _id: "6052139a7b1b742fc11a798b"
+        '404':
+          description: Sandbox does not exists
+    get:
+      summary: Get all threads in category
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: string
+          required: true
+          description: Id for the associated category
+      responses:
+        '200':
+          description: Successfully loaded content
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name: 
+                      type: string
+                    _id:
+                      type: string
+                    threads:
+                      type: array
+                      items:
+                        type: string
+        '404':
+          description: Sandbox does not exists
+  /thread/{threadId}/comment:
+    post:
+      summary: Creates a comment for a thread
+      parameters:
+        - in: path
+          name: threadId
+          schema:
+            type: string
+          required: true
+          description: Id for the associated thread
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+              required:
+                - title
+                - content
+              example:
+                title: 'Min hund'
+                content: 'Min hund är bättre'
+      responses:
+        '201':
+          description: Comment created successfully
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  likes:
+                    type: array
+                    items:
+                      type: string
+                  _id:
+                    type: string
+                  title:
+                    type: string
+                  content:
+                    type: string
+                  createdAt:
+                    type: string
+                example:
+                  likes: []
+                  _id: "6052139a7b1b742fc11a798b"
+                  title: "Hej"
+                  content: "Hej alla"
+                  createdAt: "2021-03-17T21:05:19.435Z"
+        '404':
+          description: Sandbox does not exists
+    get:
+      summary: Get all threads in category
+      parameters:
+        - in: path
+          name: threadId
+          schema:
+            type: string
+          required: true
+          description: Id for the associated thread
+      responses:
+        '200':
+          description: Successfully loaded content
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    likes:
+                      type: array
+                      items:
+                        type: string
+                    _id:
+                      type: string
+                    tite:
+                      type: string
+                    content:
+                      type: string
+                    createdAt:
+                      type: string
         '404':
           description: Sandbox does not exists

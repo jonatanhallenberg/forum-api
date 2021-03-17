@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Sandbox = require('./sandbox');
 
 const CategorySchema = new mongoose.Schema({
   name: String,

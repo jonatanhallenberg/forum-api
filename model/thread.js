@@ -4,10 +4,17 @@ const Thread = mongoose.model(
   new mongoose.Schema({
     title: String,
     content: String,
-    categories: [
+    createdAt: Date,
+    comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "category",
+        ref: "comment",
+      },
+    ],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "like",
       },
     ],
   })
