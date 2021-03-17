@@ -2,17 +2,22 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const cors = require('cors');
-const Sandbox = require("./model/sandbox");
-const Feeding = require("./model/category");
-const User = require("./model/user");
 
+//Documentation
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+//CORS
 app.use(cors())
 
+//Models
+const Sandbox = require("./model/sandbox");
+const Feeding = require("./model/category");
+const User = require("./model/user");
+
+//Controllers
 const sandboxController = require("./controller/sandboxController");
 const userController = require("./controller/userController");
 const categoryController = require("./controller/categoryController");
@@ -36,7 +41,7 @@ mongoose.connect("mongodb+srv://dbUser:bsBpxUNm9XH30jFn@cluster0.dfdti.mongodb.n
 app.post("/sandbox", sandboxController.post);
 
 //User
-app.post("/user", userController.post);
+app.post("/sandbox/:sandboxName/user", sandboxMiddleware, userController.post);
 
 //Category
 app.post("/sandbox/:sandboxName/category", sandboxMiddleware, categoryController.post);

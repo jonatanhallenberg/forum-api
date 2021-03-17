@@ -9,9 +9,9 @@ module.exports = {
     const existingSandbox = await Sandbox.findOne({ name: req.body.name });
     if (existingSandbox) {
       res
-        .status(500)
+        .status(409)
         .send(
-          `Sandbox name '${req.body.name} is not available. Try another name.`
+          `Sandbox name '${req.body.name}' is already taken. Try another name.`
         );
     } else {
       const createdSandbox = await sandbox.save();
