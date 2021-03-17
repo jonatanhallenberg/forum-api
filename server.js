@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 8080;
+const cors = require('cors');
 const Sandbox = require("./model/sandbox");
 const Feeding = require("./model/category");
 const User = require("./model/user");
