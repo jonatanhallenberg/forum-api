@@ -10,6 +10,7 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.use(cors())
 
 const sandboxController = require("./controller/sandboxController");
 const userController = require("./controller/userController");
