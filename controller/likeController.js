@@ -1,58 +1,34 @@
-const Thread = require("../model/category");
+const Thread = require("../model/thread");
 const Comment = require("../model/comment");
+const Like = require("../model/like");
 
 module.exports = {
-  get: async (req, res) => {
-    try {
-      const thread = await Thread.findById(req.params.threadId).populate(
-        "comments"
-      );
-
-      if (!thread) {
-        res.status(404).send("Thread not found");
-      } else {
-        res.json(thread.comments);
-      }
-    } catch (e) {
-      console.log(e);
-      res.status(500).end();
-    }
-  },
-  post: async (req, res) => {
-    const thread = await Thread.findById(req.params.categoryId);
-
-    if (!category) {
-      res.status(404).send("Category not found");
-    } else {
-      req.body.createdAt = new Date();
-      const thread = new Thread(req.body);
-      category.threads.push(thread);
-      await category.save();
-      await thread.save();
-      res.status(201).json(thread);
-    }
-  },
-  delete: async (req, res) => {
+  postForThread: async (req, res) => {
     const thread = await Thread.findById(req.params.threadId);
+
     if (!thread) {
       res.status(404).send("Thread not found");
     } else {
-      const deleteResult = await Comment.findByIdAndDelete(req.params.commentId);
+      req.body.createdAt = new Date();
+      const like = new Like(req.body);
+      thread.likes.push(like);
+      await like.save();
+      await thread.save();
+      res.status(201).json(like);
+    }
+  },
+  postForComment: async (req, res) => {
+    const comment = await Comment.findById(req.params.commentId);
 
-      if (deleteResult) {
-        thread.comments = thread.comments.filter(
-          (commentId) => commentId != req.params.commentId
-        );
-        try {
-          await thread.save();
-        } catch (e) {
-          res.send(500).end();
-          console.log(e);
-        }
-        res.send(200).end();
-      } else {
-        res.send(404).end();
-      }
+    if (!comment) {
+      res.status(404).send("Comment not found");
+    } else {
+      req.body.createdAt = new Date();
+      const like = new Like(req.body);
+      comment.likes.push(like);
+      await like.save();
+      await comment.save();
+      res.status(201).json(like);
     }
   },
 };

@@ -305,7 +305,7 @@ paths:
         '404':
           description: Sandbox does not exists
     get:
-      summary: Get all threads in category
+      summary: Get all comments in thread
       parameters:
         - in: path
           name: threadId
@@ -337,3 +337,57 @@ paths:
                       type: string
         '404':
           description: Sandbox does not exists
+  /thread/{threadId}/like:
+    post:
+      summary: Creates a like for a thread
+      parameters:
+        - in: path
+          name: threadId
+          schema:
+            type: string
+          required: true
+          description: Id for the associated thread
+      responses:
+        '201':
+          description: Like created successfully
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  createdAt:
+                    type: string
+                example:
+                  _id: "6052139a7b1b742fc11a798b"
+                  createdAt: "2021-03-17T21:05:19.435Z"
+        '404':
+          description: Thread not found
+  /comment/{commentId}/like:
+    post:
+      summary: Creates a like for a comment
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+          description: Id for the associated comment
+      responses:
+        '201':
+          description: Like created successfully
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  createdAt:
+                    type: string
+                example:
+                  _id: "6052139a7b1b742fc11a798b"
+                  createdAt: "2021-03-17T21:05:19.435Z"
+        '404':
+          description: Comment not found
