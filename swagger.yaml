@@ -179,7 +179,7 @@ paths:
           description: Sandbox does not exists
   /category/{categoryId}:
     delete:
-      summary: Deletes a category
+      summary: Deletes a category and all associated threads, comments and likes
     parameters:
         - in: path
           name: categoryId
