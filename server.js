@@ -47,7 +47,7 @@ app.get("/", (req, res) => res.redirect('/docs') );
 app.post("/sandbox", sandboxController.post);
 
 //User
-app.post("/sandbox/:sandboxName/user", sandboxMiddleware, userController.post);
+// app.post("/sandbox/:sandboxName/user", sandboxMiddleware, userController.post);
 
 //Category
 app.post("/sandbox/:sandboxName/category", sandboxMiddleware, categoryController.post);
