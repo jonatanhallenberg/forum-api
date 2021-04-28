@@ -34,8 +34,8 @@ app.use(passport.initialize());
 const sandboxMiddleware = require('./middleware/sandboxMiddleware');
 
 const mongoose = require("mongoose");
-//const connectionString = "mongodb+srv://dbUser:bsBpxUNm9XH30jFn@cluster0.dfdti.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const connectionString = "mongodb://localhost:27017/forum?readPreference=primary&ssl=false";
+const connectionString = "mongodb+srv://dbUser:bsBpxUNm9XH30jFn@cluster0.dfdti.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+//const connectionString = "mongodb://localhost:27017/forum?readPreference=primary&ssl=false";
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
