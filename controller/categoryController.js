@@ -24,23 +24,12 @@ module.exports = {
     res.status(201).json(category);
   },
   delete: async (req, res) => {
-    const deleteResult = await Category.findByIdAndDelete(
-      req.params.categoryId
-    );
-
-    if (deleteResult) {
-      req.sandbox.categories = req.sandbox.categories.filter(
-        (categoryId) => categoryId != req.params.categoryId
-      );
-      try {
-        await req.sandbox.save();
-      } catch (e) {
-        res.send(500).end();
-        console.log(e);
-      }
-      res.send(200).end();
+    const category = await Category.findById(req.params.categoryId);
+    if (category) {
+      await category.remove();
+      res.sendStatus(200).end();
     } else {
-      res.send(404).end();
+      res.sendStatus(404).end();
     }
-  },
+  }
 };

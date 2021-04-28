@@ -34,10 +34,14 @@ app.use(passport.initialize());
 const sandboxMiddleware = require('./middleware/sandboxMiddleware');
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://dbUser:bsBpxUNm9XH30jFn@cluster0.dfdti.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
+//const connectionString = "mongodb+srv://dbUser:bsBpxUNm9XH30jFn@cluster0.dfdti.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const connectionString = "mongodb://localhost:27017/forum?readPreference=primary&ssl=false";
+mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+app.get("/", (req, res) => res.redirect('/docs') );
 
 //Sandbox
 app.post("/sandbox", sandboxController.post);
@@ -48,10 +52,12 @@ app.post("/sandbox/:sandboxName/user", sandboxMiddleware, userController.post);
 //Category
 app.post("/sandbox/:sandboxName/category", sandboxMiddleware, categoryController.post);
 app.get("/sandbox/:sandboxName/category", sandboxMiddleware, categoryController.get);
+app.delete("/category/:categoryId", categoryController.delete)
 
 //Thread
 app.post("/category/:categoryId/thread", threadController.post);
 app.get("/category/:categoryId/thread", threadController.get);
+
 
 //Likes on threads
 app.post("/thread/:threadId/like", likeController.postForThread);
