@@ -213,12 +213,15 @@ paths:
                   type: string
                 content:
                   type: string
+                createdBy:
+                  type: string
               required:
                 - title
                 - content
               example:
                 title: 'Min katt'
                 content: 'Min katt är bäst'
+                createdBy: 'Jonsson'
       responses:
         '201':
           description: Thread created successfully
@@ -283,12 +286,16 @@ paths:
                   type: string
                 content:
                   type: string
+                createdBy:
+                  tyoe: string
               required:
                 - title
                 - content
+                - createdBy
               example:
                 title: 'Min hund'
                 content: 'Min hund är bättre'
+                createdBy: 'Hansson'
       responses:
         '201':
           description: Comment created successfully

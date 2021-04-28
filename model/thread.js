@@ -6,6 +6,7 @@ const Comment = require('./comment');
 const ThreadSchema = new mongoose.Schema({
   title: String,
   content: String,
+  createdBy: String,
   createdAt: Date,
   comments: [
     {

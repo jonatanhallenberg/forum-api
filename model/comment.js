@@ -5,6 +5,7 @@ const CommentSchema = new mongoose.Schema({
   title: String,
   content: String,
   createdAt: Date,
+  createdBy: String,
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
